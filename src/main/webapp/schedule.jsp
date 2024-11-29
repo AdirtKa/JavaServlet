@@ -1,5 +1,7 @@
 <%@ page import="models.Subject" %>
 <%@ page import="java.util.List" %>
+<%@ page import="models.Course" %>
+<%@ page import="models.SubjectName" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ru">
@@ -19,7 +21,7 @@
         }
         table {
             border-collapse: collapse;
-            width: 70%;
+            width: 80%;
             margin-top: 20px;
         }
         td {
@@ -53,17 +55,17 @@
             background-color: transparent; /* Бледно-розовый фон формы */
             padding: 20px;
             border-radius: 8px;
-            width: 40%;
+            width: 50%;
             margin-top: 20px;
         }
-        form input[type="text"] {
+        form input[type="text"], form input[type="time"], form select {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ffb6c1;
             border-radius: 5px;
         }
-        form input[type="submit"] {
+        form button {
             background-color: #d36b6b;
             color: white;
             padding: 10px 15px;
@@ -71,15 +73,13 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        form input[type="submit"]:hover {
+        form button:hover {
             background-color: #b64a4a; /* Темный розовый при наведении */
         }
-
         .delete-column {
             border: none;
             background-color: transparent;
         }
-
         /* Стили для кнопки внутри ячейки */
         .delete-button {
             background-color: #d36b6b;
@@ -91,7 +91,6 @@
             position: relative; /* Разрешаем позиционирование кнопки внутри ячейки */
             z-index: 10; /* Убедитесь, что кнопка находится поверх других элементов */
         }
-
         .delete-button:hover {
             background-color: #b64a4a; /* Темный розовый при наведении */
         }
@@ -111,26 +110,28 @@
         }
     </style>
 
+
 </head>
 <body>
 <h2>Список предметов</h2>
 <table>
-    <tr><th>ID</th><th>Название</th><th>Преподаватель</th><th>Факультет</th></tr>
+    <tr><th>ID</th><th>День недели</th><th>Время</th><th>Название</th><th>Аудитория</th></tr>
     <%
         // Извлекаем список предметов из атрибута запроса
-        List<Subject> subjects = (List<Subject>) request.getAttribute("subjects");
+        List<Course> courses = (List<Course>) request.getAttribute("courses");
 
         // Проверка на null
-        if (subjects != null && !subjects.isEmpty()) {
-            for (Subject subject : subjects) {
+        if (courses != null && !courses.isEmpty()) {
+            for (Course course : courses) {
     %>
     <tr>
-        <td><%= subject.getId() %></td>
-        <td><%= subject.getName() %></td>
-        <td><%= subject.getTeacher() %></td>
-        <td><%= subject.getFaculty() %></td>
+        <td><%= course.getId() %></td>
+        <td><%= course.getDayOfWeek() %></td>
+        <td><%= course.getTime() %></td>
+        <td><%= course.getName() %></td>
+        <td><%= course.getClassroom()%></td>
         <td class="delete-column">
-            <button class="delete-button" onclick="deleteSubject(<%= subject.getId() %>)">Удалить</button>
+            <button class="delete-button" onclick="deleteLesson(<%= course.getId() %>)">Удалить</button>
         </td>
     </tr>
     <%
@@ -143,39 +144,63 @@
     %>
 </table>
 <h3>Добавить предмет</h3>
-<form action="subjects" method="POST">
-    <label for="name">Название:</label>
-    <input type="text" id="name" required name="name"><br>
+<form action="timetable" method="POST">
+    <label for="dayOfWeek">День недели:</label>
+    <select name="dayOfWeek" id="dayOfWeek" required>
+        <option value="">Выберите</option>
+        <option value="Понедельник">Понедельник</option>
+        <option value="Вторник">Вторник</option>
+        <option value="Среда">Среда</option>
+        <option value="Четверг">Четверг</option>
+        <option value="Пятница">Пятница</option>
+        <option value="Суббота">Суббота</option>
+        <option value="Воскресенье">Воскресенье</option>
+    </select><br>
 
-    <label for="teacher">Преподаватель:</label>
-    <input type="text" id="teacher" required name="teacher"><br>
+    <label for="time">Время:</label>
+    <input type="time" name="time" id="time" required><br>
 
-    <label for="faculty">Факультет:</label>
-    <input type="text" id="faculty" required name="faculty"><br>
+    <label for="classroom">Аудитория:</label>
+    <input type="text" name="classroom" id="classroom" required><br>
+    <label for="subjectId">Предмет:</label>
+    <select name="subjectId" id="subjectId" required>
+        <option value="">Выберите предмет</option>
+        <%
+            List<SubjectName> subjects = (List<SubjectName>) request.getAttribute("subjects");
+            if (subjects != null && !subjects.isEmpty()) {
+                for (SubjectName subject : subjects) {
+        %>
+        <option value="<%= subject.getSubjectId() %>"><%= subject.getSubjectName() %></option>
+        <%
+            }
+        } else {
+        %>
+        <option value="">Предметы отсутствуют</option>
+        <% } %>
+    </select><br>
 
-    <input type="submit" value="Добавить">
+    <button type="submit">Добавить</button>
 </form>
 <button class="redirect-button" onclick="window.location.href='index.jsp';">На главную</button>
 <script>
-    function deleteSubject(id) {
+    function deleteLesson(id) {
         // Подтверждение перед удалением
         if (confirm("Вы уверены, что хотите удалить этот предмет?")) {
             // Отправляем DELETE-запрос на сервер
             var xhr = new XMLHttpRequest();
-            xhr.open("DELETE", "subjects?id=" + id, true);
+            xhr.open("DELETE", "timetable?id=" + id, true);
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     // Обновление страницы после успешного удаления
-                    alert("Предмет удален!");
+                    alert("Урок удален!");
                     location.reload();  // Перезагружаем страницу для обновления списка
                 } else {
-                    alert("Ошибка при удалении предмета: " + xhr.status);
+                    alert("Ошибка при удалении урока: " + xhr.status);
                 }
             };
             xhr.send();
         }
     }
 </script>
-
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.adirtka.javaservlet;
+package models;
 
 public class Subject {
     // Атрибуты класса

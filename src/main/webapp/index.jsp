@@ -49,12 +49,12 @@
         <th>Ссылка</th>
     </tr>
     <tr>
-        <td>subjects</td>
+        <td>Предметы</td>
         <td><a href="subjects">Открыть</a></td>
     </tr>
     <tr>
-        <td>orders</td>
-        <td><a href="subject">Открыть</a></td>
+        <td>Расписание</td>
+        <td><a href="timetable">Открыть</a></td>
     </tr>
 </table>
 </body>

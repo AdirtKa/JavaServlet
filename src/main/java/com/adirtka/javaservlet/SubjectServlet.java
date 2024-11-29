@@ -8,6 +8,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import models.Subject;
 
 @WebServlet("/subjects")
 public class SubjectServlet extends HttpServlet {
@@ -22,7 +23,7 @@ public class SubjectServlet extends HttpServlet {
         try {
             subjects = DatabaseHelper.getSubjects();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         // Передаем список предметов в JSP через request атрибут

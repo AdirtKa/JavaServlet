@@ -9,6 +9,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import models.Subject;
 
 @WebServlet("/subject")
 public class HelloServlet extends HttpServlet {
