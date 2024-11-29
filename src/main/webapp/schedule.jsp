@@ -58,12 +58,15 @@
             width: 50%;
             margin-top: 20px;
         }
-        form input[type="text"], form input[type="time"], form select {
-            width: 100%;
+        form input[type="text"],
+        form input[type="time"],
+        form select {
+            width: 95%; /* Одинаковая ширина для всех полей */
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ffb6c1;
             border-radius: 5px;
+            box-sizing: border-box; /* Чтобы ширина включала внутренние отступы */
         }
         form button {
             background-color: #d36b6b;
@@ -80,7 +83,6 @@
             border: none;
             background-color: transparent;
         }
-        /* Стили для кнопки внутри ячейки */
         .delete-button {
             background-color: #d36b6b;
             color: white;
@@ -88,13 +90,12 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            position: relative; /* Разрешаем позиционирование кнопки внутри ячейки */
-            z-index: 10; /* Убедитесь, что кнопка находится поверх других элементов */
+            position: relative;
+            z-index: 10;
         }
         .delete-button:hover {
             background-color: #b64a4a; /* Темный розовый при наведении */
         }
-
         .redirect-button {
             background-color: #d36b6b; /* Насыщенно-розовый цвет кнопки */
             color: white;
@@ -104,13 +105,10 @@
             cursor: pointer;
             margin-top: 20px;
         }
-
         .redirect-button:hover {
             background-color: #b64a4a; /* Темный розовый при наведении */
         }
     </style>
-
-
 </head>
 <body>
 <h2>Список предметов</h2>
