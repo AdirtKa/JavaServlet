@@ -111,6 +111,7 @@
     </style>
 </head>
 <body>
+<button class="redirect-button" onclick="window.location.href='index.jsp';">На главную</button>
 <h2>Список предметов</h2>
 <table>
     <tr><th>ID</th><th>День недели</th><th>Время</th><th>Название</th><th>Аудитория</th></tr>
@@ -179,7 +180,6 @@
 
     <button type="submit">Добавить</button>
 </form>
-<button class="redirect-button" onclick="window.location.href='index.jsp';">На главную</button>
 <script>
     function deleteLesson(id) {
         // Подтверждение перед удалением

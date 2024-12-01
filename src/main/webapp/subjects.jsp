@@ -113,6 +113,7 @@
 
 </head>
 <body>
+<button class="redirect-button" onclick="window.location.href='index.jsp';">На главную</button>
 <h2>Список предметов</h2>
 <table>
     <tr><th>ID</th><th>Название</th><th>Преподаватель</th><th>Факультет</th></tr>
@@ -155,7 +156,6 @@
 
     <input type="submit" value="Добавить">
 </form>
-<button class="redirect-button" onclick="window.location.href='index.jsp';">На главную</button>
 <script>
     function deleteSubject(id) {
         // Подтверждение перед удалением
