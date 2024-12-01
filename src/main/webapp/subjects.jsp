@@ -145,13 +145,13 @@
 <h3>Добавить предмет</h3>
 <form action="subjects" method="POST">
     <label for="name">Название:</label>
-    <input type="text" id="name" required name="name"><br>
+    <input type="text" id="name" maxlength="100" required name="name"><br>
 
     <label for="teacher">Преподаватель:</label>
-    <input type="text" id="teacher" required name="teacher"><br>
+    <input type="text" id="teacher" maxlength="100" required name="teacher"><br>
 
     <label for="faculty">Факультет:</label>
-    <input type="text" id="faculty" required name="faculty"><br>
+    <input type="text" id="faculty" maxlength="100" required name="faculty"><br>
 
     <input type="submit" value="Добавить">
 </form>

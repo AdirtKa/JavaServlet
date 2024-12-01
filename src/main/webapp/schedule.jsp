@@ -158,8 +158,8 @@
     <label for="time">Время:</label>
     <input type="time" name="time" id="time" required><br>
 
-    <label for="classroom">Аудитория:</label>
-    <input type="text" name="classroom" id="classroom" required><br>
+    <label for="classroom" >Аудитория:</label>
+    <input type="text" name="classroom"  maxlength="2" id="classroom" required><br>
     <label for="subjectId">Предмет:</label>
     <select name="subjectId" id="subjectId" required>
         <option value="">Выберите предмет</option>
